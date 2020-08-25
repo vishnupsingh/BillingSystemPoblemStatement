@@ -84,6 +84,17 @@ namespace BillingSystemTests
             cartValue.Should().Be(30);
         }
 
+        [Test]
+        public void ShouldReturnCartValue60ForItemsCDQuantity2EachAfterApplyingPromotion()
+        {
+            var itemC = GetCartItemByName("C", 2);
+            var itemD = GetCartItemByName("D", 2);
+            var billing = new Billing(CreateCart(new List<CartItem>() { itemC, itemD }));
+            var cartValue = billing.CalculateCartValue(promotions);
+
+            cartValue.Should().Be(60);
+        }
+
         private static Cart CreateCart(IList<CartItem> cartItems)
         {
             var cart = new Cart();
