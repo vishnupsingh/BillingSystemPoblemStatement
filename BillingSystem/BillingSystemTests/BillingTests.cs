@@ -11,19 +11,21 @@ namespace BillingSystemTests
     public class Tests
     {
         private static IList<SKU> skuList = new List<SKU>();
+        private static IList<Promotion> promotions = new List<Promotion>();
 
         [SetUp]
         public void Setup()
         {
             InitializeSKUList();
+            InitializePromotions();
         }
 
         [Test]
         public void ShouldReturnCartValue50ForItemAQuantity1()
         {
-            var itemA = GetItemByName("A");
+            var itemA = GetCartItemByName("A");
             itemA.Quantity = 1;
-            var billing = new Billing(CreateCart(new List<SKU>() { itemA }));
+            var billing = new Billing(CreateCart(new List<CartItem>() { itemA }));
             var cartValue = billing.CalculateCartValue();
 
             cartValue.Should().Be(50);
@@ -32,9 +34,9 @@ namespace BillingSystemTests
         [Test]
         public void ShouldReturnCartValue100ForItemAQuantity2()
         {
-            var itemA = GetItemByName("A");
+            var itemA = GetCartItemByName("A");
             itemA.Quantity = 2;
-            var billing = new Billing(CreateCart(new List<SKU>() { itemA }));
+            var billing = new Billing(CreateCart(new List<CartItem>() { itemA }));
             var cartValue = billing.CalculateCartValue();
 
             cartValue.Should().Be(100);
@@ -43,15 +45,25 @@ namespace BillingSystemTests
         [Test]
         public void ShouldReturnCartValue80ForItemsAAndBQuantity1Each()
         {
-            var itemA = GetItemByName("A");
-            var itemB = GetItemByName("B");
-            var billing = new Billing(CreateCart(new List<SKU>() { itemA, itemB }));
+            var itemA = GetCartItemByName("A");
+            var itemB = GetCartItemByName("B");
+            var billing = new Billing(CreateCart(new List<CartItem>() { itemA, itemB }));
             var cartValue = billing.CalculateCartValue();
 
             cartValue.Should().Be(80);
         }
 
-        private static Cart CreateCart(IList<SKU> cartItems)
+        [Test]
+        public void ShouldReturnCartValue130ForItemAQuantity3AfterApplyingPromotion()
+        {
+            var itemA = GetCartItemByName("A", 3);
+            var billing = new Billing(CreateCart(new List<CartItem>() { itemA }));
+            var cartValue = billing.CalculateCartValue(promotions);
+
+            cartValue.Should().Be(130);
+        }
+
+        private static Cart CreateCart(IList<CartItem> cartItems)
         {
             var cart = new Cart();
             foreach (var item in cartItems)
@@ -61,9 +73,15 @@ namespace BillingSystemTests
             return cart;
         }
 
-        private static SKU GetItemByName(string itemName)
+        private static CartItem GetCartItemByName(string itemName, int quantity = 1)
         {
-            return skuList.FirstOrDefault(sku => sku.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase));
+            var item = skuList.FirstOrDefault(sku => sku.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase));
+            return new CartItem
+            {
+                Id = new Random().Next(),
+                SKU = item,
+                Quantity = quantity
+            };
         }
 
         private static void InitializeSKUList()
@@ -91,6 +109,34 @@ namespace BillingSystemTests
                 Id = 4,
                 Name = "D",
                 Price = 15
+            });
+        }
+
+        private static void InitializePromotions()
+        {
+            promotions.Add(new Promotion
+            {
+                Id = 1,
+                Items = new List<int> { 1 },
+                Quantity = 3,
+                OfferValue = 130,
+                PromotionType = PromotionType.BulkItems
+            });
+            promotions.Add(new Promotion
+            {
+                Id = 2,
+                Items = new List<int> { 2 },
+                Quantity = 2,
+                OfferValue = 45,
+                PromotionType = PromotionType.BulkItems
+            });
+            promotions.Add(new Promotion
+            {
+                Id = 3,
+                Items = new List<int> { 3, 4 },
+                Quantity = 1,
+                OfferValue = 30,
+                PromotionType = PromotionType.Combo
             });
         }
     }

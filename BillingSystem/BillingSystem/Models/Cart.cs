@@ -12,14 +12,14 @@ namespace BillingSystem.Models
         /// </summary>
         public Cart()
         {
-            this.Items = new List<SKU>();
+            this.Items = new List<CartItem>();
         }
 
         /// <summary>
         ///     Parameterized Consructor.
         /// </summary>
         /// <param name="items">Cart Items.</param>
-        public Cart(IList<SKU> items)
+        public Cart(IList<CartItem> items)
         {
             this.Items = items;
         }
@@ -27,6 +27,11 @@ namespace BillingSystem.Models
         /// <summary>
         ///     Gets or Sets cart items.
         /// </summary>
-        public IList<SKU> Items { get; set; }
+        public IList<CartItem> Items { get; set; }
+
+        /// <summary>
+        ///     Gets or Sets TotalValue.
+        /// </summary>
+        public double TotalValue { get; set; }
     }
 }
