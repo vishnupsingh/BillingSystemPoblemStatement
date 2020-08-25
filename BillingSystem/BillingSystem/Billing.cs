@@ -37,6 +37,11 @@ namespace BillingSystem
             return totalValue;
         }
 
+        /// <summary>
+        ///     A method to calcluate total cart value.
+        /// </summary>
+        /// <param name="promotions">List of promotions</param>
+        /// <returns>A <see cref="double"/> value as total cart value.</returns>
         public double CalculateCartValue(IList<Promotion> promotions)
         {
             var totalValue = default(double);
@@ -63,10 +68,9 @@ namespace BillingSystem
             return totalValue;
         }
 
-        public void ApplyPromotion(CartItem item, IList<Promotion> promotions)
+        private void ApplyPromotion(CartItem item, IList<Promotion> promotions)
         {
             var applicablePromotion = promotions.FirstOrDefault(promotion => promotion.Items.Contains(item.SKU.Id));
-            var promotionalValue = 0d;
 
             if (applicablePromotion == null)
                 return;
@@ -74,29 +78,8 @@ namespace BillingSystem
             if (applicablePromotion.Quantity == 0)
                 return;
 
-            switch (applicablePromotion.PromotionType)
-            {
-                case PromotionType.BulkItems:
-                    {
-                        if (item.Quantity >= applicablePromotion.Quantity)
-                        {
-                            var itemCount = item.Quantity;
-                            while (itemCount >= applicablePromotion.Quantity)
-                            {
-                                promotionalValue += applicablePromotion.OfferValue;
-                                itemCount -= applicablePromotion.Quantity;
-                            }
-                            promotionalValue += (itemCount * item.SKU.Price);
-                            item.ItemValue = promotionalValue;
-                            item.PromotionsApplied = applicablePromotion.Id;
-                        }
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
-            }
+            var promotionCalculator = PromotionCalculatorFactory.GetPromotionCalculator(applicablePromotion.PromotionType);
+            promotionCalculator.ApplyPromotion(item, applicablePromotion);
 
         }
     }
