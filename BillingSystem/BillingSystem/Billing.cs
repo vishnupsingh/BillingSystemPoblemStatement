@@ -78,7 +78,7 @@ namespace BillingSystem
             if (applicablePromotion.Quantity == 0)
                 return;
 
-            var promotionCalculator = PromotionCalculatorFactory.GetPromotionCalculator(applicablePromotion.PromotionType);
+            var promotionCalculator = PromotionCalculatorFactory.GetPromotionCalculator(applicablePromotion.PromotionType, this.cart);
             promotionCalculator.ApplyPromotion(item, applicablePromotion);
 
         }

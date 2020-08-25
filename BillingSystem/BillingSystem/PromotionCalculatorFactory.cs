@@ -13,7 +13,7 @@ namespace BillingSystem
         /// </summary>
         /// <param name="promotionType">Promotion type enum.</param>
         /// <returns>A instance of <see cref="IPromotionCalculator"/>.</returns>
-        public static IPromotionCalculator GetPromotionCalculator(PromotionType promotionType)
+        public static IPromotionCalculator GetPromotionCalculator(PromotionType promotionType, Cart cart)
         {
             IPromotionCalculator promotionCalculator;
             switch (promotionType)
@@ -25,7 +25,7 @@ namespace BillingSystem
                     }
                 case PromotionType.Combo:
                     {
-                        promotionCalculator = new ComboPromotion();
+                        promotionCalculator = new ComboPromotion(cart);
                         break;
                     }
                 default:
