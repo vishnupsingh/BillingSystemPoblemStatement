@@ -1,4 +1,4 @@
-# BillingSystemProblemStatement
+# Problem Statement 1 : Promotion Engine
 Repository for solution of a problem statement.
 
 This solution includes two projects as following -
