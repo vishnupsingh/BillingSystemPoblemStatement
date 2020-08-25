@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/BillingSystem/BillingSystem/obj
+/BillingSystem/BillingSystemTests/bin/Debug/netcoreapp3.1
+/BillingSystem/BillingSystemTests/obj
+/BillingSystem/.vs/BillingSystem/v16/TestStore/0
+/BillingSystem/.vs/BillingSystem/v16/.suo
