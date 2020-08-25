@@ -1,7 +1,7 @@
-﻿using BillingSystem.Interfaces;
-using BillingSystem.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using BillingSystem.Interfaces;
+using BillingSystem.Models;
 
 namespace BillingSystem
 {
@@ -79,7 +79,6 @@ namespace BillingSystem
 
             var promotionCalculator = PromotionCalculatorFactory.GetPromotionCalculator(applicablePromotion.PromotionType, this.cart);
             promotionCalculator.ApplyPromotion(item, applicablePromotion);
-
         }
     }
 }

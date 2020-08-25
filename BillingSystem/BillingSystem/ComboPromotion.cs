@@ -1,7 +1,6 @@
-﻿using BillingSystem.Interfaces;
+﻿using System.Linq;
+using BillingSystem.Interfaces;
 using BillingSystem.Models;
-using System;
-using System.Linq;
 
 namespace BillingSystem
 {

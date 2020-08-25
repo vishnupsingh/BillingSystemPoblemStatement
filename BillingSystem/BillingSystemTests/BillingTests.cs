@@ -1,14 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using BillingSystem;
 using BillingSystem.Models;
 using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BillingSystemTests
 {
-    public class Tests
+    public class BillingSystemTests
     {
         private static IList<SKU> skuList = new List<SKU>();
         private static IList<Promotion> promotions = new List<Promotion>();
