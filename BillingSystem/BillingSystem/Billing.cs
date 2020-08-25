@@ -29,7 +29,7 @@ namespace BillingSystem
 
             foreach (var item in this.cart.Items)
             {
-                totalValue += item.Price;
+                totalValue += (item.Price * item.Quantity);
             }
 
             return totalValue;

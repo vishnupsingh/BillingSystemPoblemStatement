@@ -29,6 +29,28 @@ namespace BillingSystemTests
             cartValue.Should().Be(50);
         }
 
+        [Test]
+        public void ShouldReturnCartValue100ForItemAQuantity2()
+        {
+            var itemA = GetItemByName("A");
+            itemA.Quantity = 2;
+            var billing = new Billing(CreateCart(new List<SKU>() { itemA }));
+            var cartValue = billing.CalculateCartValue();
+
+            cartValue.Should().Be(100);
+        }
+
+        [Test]
+        public void ShouldReturnCartValue80ForItemsAAndBQuantity1Each()
+        {
+            var itemA = GetItemByName("A");
+            var itemB = GetItemByName("B");
+            var billing = new Billing(CreateCart(new List<SKU>() { itemA, itemB }));
+            var cartValue = billing.CalculateCartValue();
+
+            cartValue.Should().Be(80);
+        }
+
         private static Cart CreateCart(IList<SKU> cartItems)
         {
             var cart = new Cart();
