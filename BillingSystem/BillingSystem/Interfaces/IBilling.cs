@@ -1,24 +1,24 @@
-﻿using BillingSystem.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using BillingSystem.Models;
 
 namespace BillingSystem.Interfaces
 {
     /// <summary>
     ///     A contract for billing class.
     /// </summary>
-    interface IBilling
+    public interface IBilling
     {
         /// <summary>
         ///     A method to calcluate total cart value.
         /// </summary>
         /// <returns>A <see cref="double"></see> value as total cart value.</returns>
-        public double CalculateCartValue();
+        void CalculateCartValue();
 
         /// <summary>
         ///     A method to calcluate total cart value.    
         /// </summary>
         /// <param name="promotions">A list of promotions.</param>s
         /// <returns>A <see cref="double"></see> value as total cart value.</returns>
-        double CalculateCartValue(IList<Promotion> promotions);
+        void CalculateCartValue(IList<Promotion> promotions);
     }
 }

@@ -21,126 +21,179 @@ namespace BillingSystemTests
         }
 
         [Test]
-        public void ShouldReturnCartValue50ForItemAQuantity1()
+        public void ShouldReturn_CartValue50_ForItemA_Quantity1()
         {
+            // Arrange
             var itemA = GetCartItemByName("A");
-            itemA.Quantity = 1;
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemA }));
-            var cartValue = billing.CalculateCartValue();
 
-            cartValue.Should().Be(50);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemA });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue();
+
+            // Assert
+            cart.TotalValue.Should().Be(50);
         }
 
         [Test]
-        public void ShouldReturnCartValue100ForItemAQuantity2()
+        public void ShouldReturn_CartValue100_ForItemA_Quantity2()
         {
-            var itemA = GetCartItemByName("A");
-            itemA.Quantity = 2;
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemA }));
-            var cartValue = billing.CalculateCartValue();
+            // Arrange
+            var itemA = GetCartItemByName("A", 2);
 
-            cartValue.Should().Be(100);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemA });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue();
+
+            // Assert
+            cart.TotalValue.Should().Be(100);
         }
 
         [Test]
-        public void ShouldReturnCartValue80ForItemsAAndBQuantity1Each()
+        public void ShouldReturn_CartValue80_ForItemsAAndB_Quantity1Each()
         {
+            // Arrange
             var itemA = GetCartItemByName("A");
             var itemB = GetCartItemByName("B");
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemA, itemB }));
-            var cartValue = billing.CalculateCartValue();
 
-            cartValue.Should().Be(80);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemA, itemB });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue();
+
+            // Assert
+            cart.TotalValue.Should().Be(80);
         }
 
         [Test]
-        public void ShouldReturnCartValue130ForItemAQuantity3AfterApplyingPromotion()
+        public void ShouldReturn_CartValue130_ForItemA_Quantity3_AfterApplyingPromotion()
         {
+            // Arrange
             var itemA = GetCartItemByName("A", 3);
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemA }));
-            var cartValue = billing.CalculateCartValue(promotions);
 
-            cartValue.Should().Be(130);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemA });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue(promotions);
+
+            // Assert
+            cart.TotalValue.Should().Be(130);
         }
 
         [Test]
-        public void ShouldReturnCartValue45ForItemBQuantity2AfterApplyingPromotion()
+        public void ShouldReturn_CartValue45_ForItemB_Quantity2_AfterApplyingPromotion()
         {
+            // Arrange
             var itemB = GetCartItemByName("B", 2);
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemB }));
-            var cartValue = billing.CalculateCartValue(promotions);
 
-            cartValue.Should().Be(45);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemB });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue(promotions);
+
+            // Assert
+            cart.TotalValue.Should().Be(45);
         }
 
         [Test]
-        public void ShouldReturnCartValue30ForItemsCDQuantity1EachAfterApplyingPromotion()
+        public void ShouldReturn_CartValue30_ForItemsCD_Quantity1Each_AfterApplyingPromotion()
         {
+            // Arrange
             var itemC = GetCartItemByName("C");
             var itemD = GetCartItemByName("D");
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemC, itemD }));
-            var cartValue = billing.CalculateCartValue(promotions);
 
-            cartValue.Should().Be(30);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemC, itemD });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue(promotions);
+
+            // Assert
+            cart.TotalValue.Should().Be(30);
         }
 
         [Test]
-        public void ShouldReturnCartValue60ForItemsCDQuantity2EachAfterApplyingPromotion()
+        public void ShouldReturn_CartValue60_ForItemsCD_Quantity2Each_AfterApplyingPromotion()
         {
+            // Arrange
             var itemC = GetCartItemByName("C", 2);
             var itemD = GetCartItemByName("D", 2);
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemC, itemD }));
-            var cartValue = billing.CalculateCartValue(promotions);
 
-            cartValue.Should().Be(60);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemC, itemD });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue(promotions);
+
+            // Assert
+            cart.TotalValue.Should().Be(60);
         }
 
         [Test]
-        public void ShouldReturnCartValue45ForItemsCDQuantity1ForC2ForDAfterApplyingPromotion()
+        public void ShouldReturn_CartValue45_ForItemsCD_Quantity1ForC2ForD_AfterApplyingPromotion()
         {
+            // Arrange
             var itemC = GetCartItemByName("C", 1);
             var itemD = GetCartItemByName("D", 2);
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemC, itemD }));
-            var cartValue = billing.CalculateCartValue(promotions);
 
-            cartValue.Should().Be(45);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemC, itemD });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue(promotions);
+
+            // Assert
+            cart.TotalValue.Should().Be(45);
         }
 
         [Test]
-        public void ShouldReturnCartValue100ForItemsABCQuantity1EachAfterApplyingPromotion()
+        public void ShouldReturn_CartValue100_ForItemsABC_Quantity1Each_AfterApplyingPromotion()
         {
+            // Arrange
             var itemA = GetCartItemByName("A", 1);
             var itemB = GetCartItemByName("B", 1);
             var itemC = GetCartItemByName("C", 1);
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemA, itemB, itemC }));
-            var cartValue = billing.CalculateCartValue(promotions);
 
-            cartValue.Should().Be(100);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemA, itemB, itemC });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue(promotions);
+
+            // Assert
+            cart.TotalValue.Should().Be(100);
         }
 
         [Test]
-        public void ShouldReturnCartValue370ForItemsABCAfterApplyingPromotion()
+        public void ShouldReturn_CartValue370_ForItemsABC_AfterApplyingPromotion()
         {
+            // Arrange
             var itemA = GetCartItemByName("A", 5);
             var itemB = GetCartItemByName("B", 5);
             var itemC = GetCartItemByName("C", 1);
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemA, itemB, itemC }));
-            var cartValue = billing.CalculateCartValue(promotions);
 
-            cartValue.Should().Be(370);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemA, itemB, itemC });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue(promotions);
+
+            // Assert
+            cart.TotalValue.Should().Be(370);
         }
 
         [Test]
-        public void ShouldReturnCartValue280ForItemsABCDAfterApplyingPromotion()
+        public void ShouldReturn_CartValue280_ForItemsABCD_AfterApplyingPromotion()
         {
+            // Arrange
             var itemA = GetCartItemByName("A", 3);
             var itemB = GetCartItemByName("B", 5);
             var itemC = GetCartItemByName("C", 1);
             var itemD = GetCartItemByName("D", 1);
-            var billing = new Billing(CreateCart(new List<CartItem>() { itemA, itemB, itemC, itemD }));
-            var cartValue = billing.CalculateCartValue(promotions);
 
-            cartValue.Should().Be(280);
+            // Act
+            var cart = CreateCart(new List<CartItem>() { itemA, itemB, itemC, itemD });
+            var billing = new Billing(cart);
+            billing.CalculateCartValue(promotions);
+
+            // Assert
+            cart.TotalValue.Should().Be(280);
         }
 
         private static Cart CreateCart(IList<CartItem> cartItems)

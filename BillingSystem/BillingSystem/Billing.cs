@@ -25,7 +25,7 @@ namespace BillingSystem
         ///     A method to calcluate total cart value.
         /// </summary>
         /// <returns>A <see cref="double"/> value as total cart value.</returns>
-        public double CalculateCartValue()
+        public void CalculateCartValue()
         {
             var totalValue = default(double);
 
@@ -34,7 +34,7 @@ namespace BillingSystem
                 totalValue += (item.SKU.Price * item.Quantity);
             }
 
-            return totalValue;
+            cart.TotalValue = totalValue;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace BillingSystem
         /// </summary>
         /// <param name="promotions">List of promotions</param>
         /// <returns>A <see cref="double"/> value as total cart value.</returns>
-        public double CalculateCartValue(IList<Promotion> promotions)
+        public void CalculateCartValue(IList<Promotion> promotions)
         {
             var totalValue = default(double);
 
@@ -65,7 +65,6 @@ namespace BillingSystem
             }
 
             cart.TotalValue = totalValue;
-            return totalValue;
         }
 
         private void ApplyPromotion(CartItem item, IList<Promotion> promotions)
