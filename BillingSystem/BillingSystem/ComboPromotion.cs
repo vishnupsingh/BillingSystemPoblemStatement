@@ -55,7 +55,8 @@ namespace BillingSystem
 
         private int GetMinimumQuanityItem(Promotion promotion)
         {
-            var cartItem = cart.Items.ElementAt(0);
+            var promotionalItems = cart.Items.Where(item => promotion.Items.Contains(item.SKU.Id)).ToList();
+            var cartItem = promotionalItems.ElementAt(0);
             var minQuantity = cartItem.Quantity;
             for (int i = 0; i < promotion.Items.Count; i++)
             {
